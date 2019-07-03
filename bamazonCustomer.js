@@ -23,4 +23,14 @@ connection.connect(function(err){
   
   
   prompt.start();
+
+  prompt.get(["id", "howMany"], function (err, result) {
+	if (err){
+	    console.log(err)
+	}
+
+	var CustomerPickID = parseInt(result.id);
+	var CustomerQuantity = parseInt(result.howMany);
+
+	console.log("id=" + CustomerPickID, "how many=" + CustomerQuantity);
 })  
