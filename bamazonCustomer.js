@@ -53,4 +53,14 @@ connection.connect(function(err){
           			});	
         		});
           	}	
-})  
+              else if(want > have && have !=0){
+			    console.log("Insufficient quantity. We only have "+ have + " in stock.");
+		  	}
+		  	else{
+	          return false
+	        }
+		});
+	};
+	selectID();	
+	});
+}) 
