@@ -40,11 +40,11 @@ connection.connect(function (err) {
                 console.log(res);
                 var want = CustomerQuantity;
                 var have = res[0].stock_quantity;
-                var individprice = res[0].price;
+                var pricePerItem = res[0].price;
                 newQuantity = have - want;
                 if (newQuantity >= 0) {
                     console.log("Ok! We have enough " + res[0].product_name + " in stock.");
-                    var totalCost = individprice * CustomerQuantity;
+                    var totalCost = pricePerItem * CustomerQuantity;
                     console.log("You owe $" + totalCost);
                     connection.query("UPDATE Products SET stock_quantity = " + newQuantity + " WHERE item_id = " + CustomerPickID, function (err, res) {
                         if (err) throw err;
