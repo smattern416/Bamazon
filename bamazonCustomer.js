@@ -16,10 +16,10 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
     if(err){
-      console.log('Error connecting to Db');
+      console.log("Error connecting to Database");
       return;
     }
-    console.log('Connection established');
+    console.log("Connection established");
   
   
   prompt.start();
@@ -32,5 +32,25 @@ connection.connect(function(err){
 	var CustomerPickID = parseInt(result.id);
 	var CustomerQuantity = parseInt(result.howMany);
 
-	console.log("id=" + CustomerPickID, "how many=" + CustomerQuantity);
+    console.log("id=" + CustomerPickID, "how many=" + CustomerQuantity);
+    
+    function selectID(){
+		connection.query("SELECT * FROM Products WHERE item_id =" + CustomerPickID, function(err, res) { 
+			if (err) throw err;
+			console.log(res);
+			var want = CustomerQuantity;
+   			var have = res[0].stock_quantity;
+   			var individprice = res[0].price;
+   			newQuantity = have - want;
+   			if (newQuantity >= 0){
+          		console.log("Ok! We have enough " + res[0].product_name + " in stock.");
+          		var totalCost= individprice * CustomerQuantity;
+          		console.log("You owe $" +totalCost);
+          		connection.query("UPDATE Products SET stock_quantity = " + newQuantity + " WHERE item_id = " + CustomerPickID, function(err, res){
+        		if (err) throw err;
+        			connection.query("SELECT item_id, product_name, department_name, price, stock_quantity FROM products WHERE item_id =" + CustomerPickID, function(err, res){
+          				console.log(res);
+          			});	
+        		});
+          	}	
 })  
