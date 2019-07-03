@@ -11,19 +11,16 @@ var connection = mysql.createConnection({
 
   // Your password
   password: "root",
-  database: "dog_DB"
+  database: "bamazon_DB"
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId);
-  afterConnection();
-});
-
-function afterConnection() {
-  connection.query("SELECT * FROM dogs", function(err, res) {
-    if (err) throw err;
-    console.log(res);
-    connection.end();
-  });
-}
+connection.connect(function(err){
+    if(err){
+      console.log('Error connecting to Db');
+      return;
+    }
+    console.log('Connection established');
+  
+  
+  prompt.start();
+})  
